@@ -9,7 +9,10 @@ import SwiftUI
 
 struct HomeView: View {
     var body: some View {
-        Text("Hello, this is the Home View.")
+        VStack {
+            Text("Hello, this is the Home View.")
+        }
+        .navigationTitle("Home")
     }
 }
 

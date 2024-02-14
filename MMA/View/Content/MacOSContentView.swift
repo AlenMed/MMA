@@ -7,14 +7,42 @@
 
 import SwiftUI
 
+#if os(macOS)
 struct MacOSContentView: View {
-    @State var contentVM: ContentViewModel
+    @Bindable var contentVM: ContentViewModel
     
     var body: some View {
         NavigationSplitView(sidebar: {
             MacOSSidebar(contentVM: contentVM)
         }) {
             viewForAppState()
+        }
+        .sheet(isPresented: $contentVM.showNewCategorySheet) {
+            NewCategoryView()
+        }
+        .sheet(isPresented: $contentVM.showNewTransactionSheet) {
+            NewTransactionView()
+        }
+        .toolbar {
+            ToolbarItem {
+//MARK: Determine action depending on state
+                Button {
+                    withAnimation {
+                        switch contentVM.appState {
+                        case 1, 2, 3:
+                            contentVM.showNewTransactionSheet = true
+                        case 4:
+                            contentVM.showNewCategorySheet = true
+                        default:
+                            contentVM.showNewTransactionSheet = true
+                        }
+                    }
+                } label: {
+                    Image(systemName: "plus")
+                        .fontWeight(.bold)
+                        .foregroundStyle(Color.accentColor)
+                }
+            }
         }
     }
     
@@ -40,3 +68,4 @@ struct MacOSContentView: View {
 #Preview {
     MacOSContentView(contentVM: ContentViewModel())
 }
+#endif

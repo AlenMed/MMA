@@ -9,7 +9,10 @@ import SwiftUI
 
 struct ChartView: View {
     var body: some View {
-        Text("Hi, this is the Chart View.")
+        VStack {
+            Text("Hi, this is the Chart View.")
+        }
+        .navigationTitle("Charts")
     }
 }
 

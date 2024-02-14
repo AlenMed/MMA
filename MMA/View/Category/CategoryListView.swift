@@ -6,10 +6,20 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct CategoryListView: View {
+    @Environment(\.modelContext) private var modelContext
+    @Query private var categories: [Category]
+
     var body: some View {
-        Text("Category list view")
+        List {
+            ForEach(categories) { category in
+                
+                Text("\(category.name)")
+            }
+        }
+        .navigationTitle("Categories")
     }
 }
 

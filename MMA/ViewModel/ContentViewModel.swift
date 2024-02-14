@@ -30,5 +30,7 @@ class ContentViewModel {
     ]
     
     var appState: Int = 1
+    var showNewTransactionSheet: Bool = false
+    var showNewCategorySheet: Bool = false
 
 }
