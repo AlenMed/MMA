@@ -12,7 +12,7 @@ import SwiftData
 struct MMAApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
-            Item.self,
+            Transact.self,
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -25,7 +25,12 @@ struct MMAApp: App {
 
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            #if os(iOS)
+            iOSContentView()
+            #endif
+            #if os(macOS)
+            MacOSContentView()
+            #endif
         }
         .modelContainer(sharedModelContainer)
     }
