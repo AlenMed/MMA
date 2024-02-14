@@ -34,7 +34,7 @@ struct TransactionListView: View {
 
     private func addItem() {
         withAnimation {
-            let transaction = Transact(timestamp: Date())
+            let transaction = Transact(id: UUID(), title: "Test", amount: 200, timestamp: Date(), accountId: "richmanaccount")
             modelContext.insert(transaction)
         }
     }

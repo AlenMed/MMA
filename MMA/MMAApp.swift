@@ -13,6 +13,7 @@ struct MMAApp: App {
     var sharedModelContainer: ModelContainer = {
         let schema = Schema([
             Transact.self,
+            Category.self
         ])
         let modelConfiguration = ModelConfiguration(schema: schema, isStoredInMemoryOnly: false)
 
@@ -22,14 +23,16 @@ struct MMAApp: App {
             fatalError("Could not create ModelContainer: \(error)")
         }
     }()
+    
+    @State var contentVM = ContentViewModel()
 
     var body: some Scene {
         WindowGroup {
             #if os(iOS)
-            iOSContentView()
+            iOSContentView(contentVM: contentVM)
             #endif
             #if os(macOS)
-            MacOSContentView()
+            MacOSContentView(contentVM: contentVM)
             #endif
         }
         .modelContainer(sharedModelContainer)

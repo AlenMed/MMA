@@ -10,7 +10,7 @@ import SwiftData
 
 @Model
 final class Transact {
-    var id = UUID()
+    var id: UUID
     var title: String
     var note: String?
     var amount: Double
