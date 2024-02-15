@@ -19,6 +19,7 @@ struct TransactionDetailView: View {
             HStack {
                 Button {
                     withAnimation {
+                        transactionVM.selectedTransaction = nil
                         dismiss()
                     }
                 } label: {
@@ -44,6 +45,7 @@ struct TransactionDetailView: View {
                 Button {
                     withAnimation {
                         dismiss()
+                        transactionVM.selectedTransaction = nil
                         modelContext.delete(transaction)
                     }
                 } label: {

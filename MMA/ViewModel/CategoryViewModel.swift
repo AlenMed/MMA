@@ -6,12 +6,25 @@
 //
 
 import Foundation
+import SwiftUI
 
 @Observable
 class CategoryViewModel {
     var selectedCategory: Category?
+    var selectedCategories: [Category] = []
     
-    init(selectedCategory: Category? = nil) {
+    var multipleSelection: Bool = false
+    
+    init(selectedCategory: Category? = nil, selectedCategories: [Category] = [], multipleSelection: Bool = false) {
         self.selectedCategory = selectedCategory
+        self.selectedCategories = selectedCategories
+        self.multipleSelection = multipleSelection
+    }
+    
+    func toggleMultipleSelection() {
+        withAnimation {
+            multipleSelection.toggle()
+            selectedCategories = []
+        }
     }
 }

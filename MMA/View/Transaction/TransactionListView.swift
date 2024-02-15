@@ -14,11 +14,28 @@ struct TransactionListView: View {
     
     @Bindable var contentVM: ContentViewModel
     @Bindable var transactionVM: TransactionViewModel
+    
+    @State private var selection: [Transact] = []
 
     var body: some View {
             List {
                 ForEach(transactions) { transaction in
-                    HStack(alignment: .center) {
+                    HStack(alignment: .top) {
+                        
+        
+                        if transactionVM.multipleSelection {
+                            Button {
+                                handleSelection(multiSelect: transactionVM.multipleSelection, transaction: transaction)
+                            } label: {
+                                if selection.contains(transaction) {
+                                    Image(systemName: "checkmark.circle.fill")
+                                } else {
+                                    Image(systemName: "circle")
+                                }
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                        }
+                        
                         VStack(alignment: .leading) {
                             Text(transaction.title)
                                 .font(.title2)
@@ -45,33 +62,65 @@ struct TransactionListView: View {
                                 .fontWeight(.ultraLight)
                                 .font(.system(size: 8))
                         }
-                    //TODO: FIX
-                        if transaction == transactionVM.selectedTransaction {
+                        if selection.contains(transaction) {
                             Button {
                                 withAnimation {
+                                    transactionVM.selectedTransaction = transaction
                                     contentVM.showTransactionDetailSheet = true
                                 }
                             } label: {
                                 Image(systemName: "info.circle")
                             }
                             .buttonStyle(PlainButtonStyle())
+                            
+                            
                         }
                     }
                     .onTapGesture {
-                        withAnimation {
-                            transactionVM.selectedTransaction = transaction
-                        }
+                        handleSelection(multiSelect: transactionVM.multipleSelection, transaction: transaction)
                     }
                     .padding(6)
-                    .background(transactionVM.selectedTransaction == transaction ? Color.accentColor.opacity(0.33) : Color.clear)
+                    .background(selection.contains(transaction) ? Color.accentColor.opacity(0.33) : transactionVM.selectedTransaction == transaction ? Color.accentColor.opacity(0.33) : Color.clear)
                     .clipShape(RoundedRectangle(cornerRadius: 6))
                 }
             }
             .navigationTitle("Transactions")
             .onDisappear {
-                    transactionVM.selectedTransaction = nil
+                transactionVM.selectedTransactions = []
+                transactionVM.multipleSelection = false
+                transactionVM.selectedTransaction = nil
+            }
+            .onAppear {
+                withAnimation {
+                    transactionVM.multipleSelection = false
+                }
             }
     }
+    
+    private func handleSelection(multiSelect: Bool, transaction: Transact) {
+        withAnimation {
+            
+            if multiSelect {
+                if selection.contains(transaction) {
+                    selection.removeAll(where: { $0.id == transaction.id })
+                } else {
+                    selection.append(transaction)
+                }
+                
+                
+            } else {
+                if !selection.contains(transaction) {
+                    selection = []
+                    selection.append(transaction)
+                } else {
+                    selection = []
+                }
+            }
+            transactionVM.selectedTransactions = selection
+            print(transactionVM.selectedTransactions)
+        }
+    }
+    
 }
 
 #Preview {
