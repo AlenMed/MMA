@@ -11,7 +11,7 @@ import SwiftData
 struct CategoryListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var categories: [Category]
-    
+    @Bindable var contentVM: ContentViewModel
     @Bindable var categoryVM: CategoryViewModel
     
     @State private var selection: [Category] = []
@@ -39,6 +39,18 @@ struct CategoryListView: View {
                     Spacer()
                     
                     Text(DateFormatter.localizedString(from: category.timestamp, dateStyle: .medium, timeStyle: .short))
+                    
+                    if selection.contains(category) {
+                        Button {
+                            withAnimation {
+                                categoryVM.selectedCategory = category
+                                contentVM.showCategoryDetailSheet = true
+                            }
+                        } label: {
+                            Image(systemName: "info.circle")
+                        }
+                        .buttonStyle(PlainButtonStyle())
+                    }
                 }
                 .padding(6)
                 .background(selection.contains(category) ? Color.accentColor.opacity(0.33) : Color.clear)
@@ -80,10 +92,11 @@ struct CategoryListView: View {
                     selection = []
                 }
             }
+            categoryVM.selectedCategories = selection
         }
     }
 }
 
 #Preview {
-    CategoryListView(categoryVM: CategoryViewModel())
+    CategoryListView(contentVM: ContentViewModel(), categoryVM: CategoryViewModel())
 }

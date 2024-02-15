@@ -32,13 +32,13 @@ struct iOSContentView: View {
                     }
                     .tag(2)
                 
-                TransactionListView(contentVM: contentVM, transactionVM: transactionVM)
+                TransactionListView(contentVM: contentVM, transactionVM: transactionVM, categoryVM: categoryVM)
                     .tabItem {
                         Image(systemName: "creditcard.fill")
                     }
                     .tag(3)
                 
-                CategoryListView(categoryVM: categoryVM)
+                CategoryListView(contentVM: contentVM, categoryVM: categoryVM)
                     .tabItem {
                         Image(systemName: "square.filled.on.square")
                     }

@@ -52,10 +52,8 @@ struct Toolbar: ToolbarContent {
                 }
             }
         }
-        ToolbarItem {
-            EditButton()
-        }
     }
+//TODO: iOS version needs fix.
     private func deleteItem() {
         if let _ = transactionVM.selectedTransaction, let _ = categoryVM.selectedCategory {
                 print("Error: Two items selected.")

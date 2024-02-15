@@ -14,6 +14,7 @@ struct TransactionListView: View {
     
     @Bindable var contentVM: ContentViewModel
     @Bindable var transactionVM: TransactionViewModel
+    @Bindable var categoryVM: CategoryViewModel
     
     @State private var selection: [Transact] = []
 
@@ -42,9 +43,10 @@ struct TransactionListView: View {
                                 .fontWeight(.semibold)
                                 .padding(.bottom, -6)
                             
-                            if let categoryName = transaction.category?.name {
-                                Button(categoryName) {
+                            if let category = transaction.category {
+                                Button(category.name) {
                                     withAnimation {
+                                        categoryVM.selectedCategory = category
                                         contentVM.showCategoryDetailSheet = true
                                     }
                                 }
@@ -72,9 +74,7 @@ struct TransactionListView: View {
                                 Image(systemName: "info.circle")
                             }
                             .buttonStyle(PlainButtonStyle())
-                            
-                            
-                        }
+                        } 
                     }
                     .onTapGesture {
                         handleSelection(multiSelect: transactionVM.multipleSelection, transaction: transaction)
@@ -117,13 +117,12 @@ struct TransactionListView: View {
                 }
             }
             transactionVM.selectedTransactions = selection
-            print(transactionVM.selectedTransactions)
         }
     }
     
 }
 
 #Preview {
-    TransactionListView(contentVM: ContentViewModel(),transactionVM: TransactionViewModel())
+    TransactionListView(contentVM: ContentViewModel(),transactionVM: TransactionViewModel(), categoryVM: CategoryViewModel())
         .modelContainer(for: Transact.self, inMemory: true)
 }

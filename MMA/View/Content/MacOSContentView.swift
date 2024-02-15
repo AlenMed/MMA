@@ -26,12 +26,14 @@ struct MacOSContentView: View {
         }
         .sheet(isPresented: $contentVM.showCategoryDetailSheet) {
             CategoryDetailView(categoryVM: categoryVM)
+                .frame(minWidth: 320, maxWidth: 600, minHeight: 420, maxHeight: 720)
         }
         .sheet(isPresented: $contentVM.showNewTransactionSheet) {
             NewTransactionView()
         }
         .sheet(isPresented: $contentVM.showTransactionDetailSheet) {
             TransactionDetailView(transactionVM: transactionVM)
+                .frame(minWidth: 320, maxWidth: 600, minHeight: 420, maxHeight: 420)
         }
         
         .toolbar {
@@ -47,9 +49,9 @@ struct MacOSContentView: View {
         case 2:
             ChartView()
         case 3:
-            TransactionListView(contentVM: contentVM, transactionVM: transactionVM)
+            TransactionListView(contentVM: contentVM, transactionVM: transactionVM, categoryVM: categoryVM)
         case 4:
-            CategoryListView(categoryVM: categoryVM)
+            CategoryListView(contentVM: contentVM, categoryVM: categoryVM)
         default:
             Text("Unrecognised View")
         }
