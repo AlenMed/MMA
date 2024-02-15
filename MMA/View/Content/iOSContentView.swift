@@ -9,6 +9,8 @@ import SwiftUI
 
 #if os(iOS)
 struct iOSContentView: View {
+    @Environment(\.modelContext) private var modelContext
+    
     @Bindable var contentVM: ContentViewModel
     @State var transactionVM: TransactionViewModel
     @State var categoryVM: CategoryViewModel
@@ -36,7 +38,7 @@ struct iOSContentView: View {
                     }
                     .tag(3)
                 
-                CategoryListView()
+                CategoryListView(categoryVM: categoryVM)
                     .tabItem {
                         Image(systemName: "square.filled.on.square")
                     }
@@ -60,25 +62,7 @@ struct iOSContentView: View {
                 }
             }
             .toolbar {
-                ToolbarItem {
-                    Button {
-                        //MARK: Decide action based on tab
-                        withAnimation {
-                            switch contentVM.appState {
-                            case 1, 2, 3:
-                                contentVM.showNewTransactionSheet = true
-                            case 4:
-                                contentVM.showNewCategorySheet = true
-                            default:
-                                contentVM.showNewTransactionSheet = true
-                            }
-                        }
-                    } label: {
-                        Image(systemName: "plus")
-                            .foregroundStyle(Color.accentColor)
-                            .fontWeight(.bold)
-                    }
-                }
+                Toolbar(contentVM: contentVM, transactionVM: transactionVM, categoryVM: categoryVM)
             }
         }
     }

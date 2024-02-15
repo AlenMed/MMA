@@ -18,7 +18,7 @@ struct TransactionListView: View {
     var body: some View {
             List {
                 ForEach(transactions) { transaction in
-                    HStack(alignment: .top) {
+                    HStack(alignment: .center) {
                         VStack(alignment: .leading) {
                             Text(transaction.title)
                                 .font(.title2)
@@ -69,7 +69,7 @@ struct TransactionListView: View {
             }
             .navigationTitle("Transactions")
             .onDisappear {
-                transactionVM.selectedTransaction = nil
+                    transactionVM.selectedTransaction = nil
             }
     }
 }

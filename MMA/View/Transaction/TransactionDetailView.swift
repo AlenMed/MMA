@@ -37,6 +37,18 @@ struct TransactionDetailView: View {
                 Text(transaction.accountId)
                 Text(transaction.category?.name ?? "No category")
                 Text(transaction.location ?? "No location")
+                
+                Text("Transaction id: \(transaction.id)")
+                    .fontWeight(.ultraLight)
+                
+                Button {
+                    withAnimation {
+                        dismiss()
+                        modelContext.delete(transaction)
+                    }
+                } label: {
+                    Image(systemName: "trash.fill")
+                }
             }
         }
         .padding(12)

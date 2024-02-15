@@ -9,6 +9,8 @@ import SwiftUI
 
 #if os(macOS)
 struct MacOSContentView: View {
+    @Environment(\.modelContext) private var modelContext
+    
     @Bindable var contentVM: ContentViewModel
     @State var transactionVM: TransactionViewModel
     @State var categoryVM: CategoryViewModel
@@ -31,31 +33,12 @@ struct MacOSContentView: View {
         .sheet(isPresented: $contentVM.showTransactionDetailSheet) {
             TransactionDetailView(transactionVM: transactionVM)
         }
+        
         .toolbar {
-            ToolbarItem {
-//MARK: Determine action depending on state
-                Button {
-                    withAnimation {
-                        switch contentVM.appState {
-                        case 1, 2, 3:
-                            contentVM.showNewTransactionSheet = true
-                        case 4:
-                            contentVM.showNewCategorySheet = true
-                        default:
-                            contentVM.showNewTransactionSheet = true
-                        }
-                    }
-                } label: {
-                    Image(systemName: "plus")
-                        .fontWeight(.bold)
-                        .foregroundStyle(Color.accentColor)
-                }
-            }
+            Toolbar(contentVM: contentVM, transactionVM: transactionVM, categoryVM: categoryVM)
         }
     }
     
-    
-//MARK: See contentVM
     @ViewBuilder
     private func viewForAppState() -> some View {
         switch contentVM.appState {
@@ -66,7 +49,7 @@ struct MacOSContentView: View {
         case 3:
             TransactionListView(contentVM: contentVM, transactionVM: transactionVM)
         case 4:
-            CategoryListView()
+            CategoryListView(categoryVM: categoryVM)
         default:
             Text("Unrecognised View")
         }
