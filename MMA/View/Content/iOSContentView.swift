@@ -9,7 +9,10 @@ import SwiftUI
 
 #if os(iOS)
 struct iOSContentView: View {
-    @State var contentVM: ContentViewModel
+    @Bindable var contentVM: ContentViewModel
+    @State var transactionVM: TransactionViewModel
+    @State var categoryVM: CategoryViewModel
+    
     @State private var tabSelection: Int = 1
     
     var body: some View {
@@ -27,7 +30,7 @@ struct iOSContentView: View {
                     }
                     .tag(2)
                 
-                TransactionListView()
+                TransactionListView(contentVM: contentVM, transactionVM: transactionVM)
                     .tabItem {
                         Image(systemName: "creditcard.fill")
                     }
@@ -42,8 +45,14 @@ struct iOSContentView: View {
             .sheet(isPresented: $contentVM.showNewTransactionSheet) {
                 NewTransactionView()
             }
+            .sheet(isPresented: $contentVM.showTransactionDetailSheet) {
+                TransactionDetailView(transactionVM: transactionVM)
+            }
             .sheet(isPresented: $contentVM.showNewCategorySheet) {
                 NewCategoryView()
+            }
+            .sheet(isPresented: $contentVM.showCategoryDetailSheet) {
+                CategoryDetailView(categoryVM: categoryVM)
             }
             .onChange(of: tabSelection) {
                 withAnimation {
@@ -53,6 +62,7 @@ struct iOSContentView: View {
             .toolbar {
                 ToolbarItem {
                     Button {
+                        //MARK: Decide action based on tab
                         withAnimation {
                             switch contentVM.appState {
                             case 1, 2, 3:
@@ -75,6 +85,6 @@ struct iOSContentView: View {
 }
 
 #Preview {
-    iOSContentView(contentVM: ContentViewModel())
+    iOSContentView(contentVM: ContentViewModel(), transactionVM: TransactionViewModel(), categoryVM: CategoryViewModel())
 }
 #endif

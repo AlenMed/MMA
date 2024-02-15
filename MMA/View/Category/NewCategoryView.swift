@@ -16,7 +16,7 @@ struct NewCategoryView: View {
     @State private var name: String = ""
     
     var body: some View {
-        VStack {
+        VStack(spacing: 24) {
             HStack {
                 Button {
                     withAnimation {

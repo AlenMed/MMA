@@ -12,17 +12,27 @@ struct TransactionListView: View {
     @Environment(\.modelContext) private var modelContext
     @Query private var transactions: [Transact]
     
-    @State private var selectedTransaction: Transact?
+    @Bindable var contentVM: ContentViewModel
+    @Bindable var transactionVM: TransactionViewModel
 
     var body: some View {
             List {
                 ForEach(transactions) { transaction in
-                    HStack {
+                    HStack(alignment: .top) {
                         VStack(alignment: .leading) {
                             Text(transaction.title)
                                 .font(.title2)
                                 .fontWeight(.semibold)
-                            Text(transaction.category?.name ?? "")
+                                .padding(.bottom, -6)
+                            
+                            if let categoryName = transaction.category?.name {
+                                Button(categoryName) {
+                                    withAnimation {
+                                        contentVM.showCategoryDetailSheet = true
+                                    }
+                                }
+                                .buttonStyle(CategoryButtonStyle())
+                            }
                         }
                         
                         Spacer()
@@ -35,41 +45,36 @@ struct TransactionListView: View {
                                 .fontWeight(.ultraLight)
                                 .font(.system(size: 8))
                         }
+                    //TODO: FIX
+                        if transaction == transactionVM.selectedTransaction {
+                            Button {
+                                withAnimation {
+                                    contentVM.showTransactionDetailSheet = true
+                                }
+                            } label: {
+                                Image(systemName: "info.circle")
+                            }
+                            .buttonStyle(PlainButtonStyle())
+                        }
                     }
                     .onTapGesture {
                         withAnimation {
-                            selectedTransaction = transaction
+                            transactionVM.selectedTransaction = transaction
                         }
                     }
                     .padding(6)
-                    .background(selectedTransaction == transaction ? Color.accentColor.opacity(0.33) : Color.clear)
+                    .background(transactionVM.selectedTransaction == transaction ? Color.accentColor.opacity(0.33) : Color.clear)
                     .clipShape(RoundedRectangle(cornerRadius: 6))
                 }
-                .onDelete(perform: deleteItems)
             }
             .navigationTitle("Transactions")
             .onDisappear {
-                selectedTransaction = nil
+                transactionVM.selectedTransaction = nil
             }
-    }
-
-    private func addItem() {
-        withAnimation {
-            let transaction = Transact(id: UUID(), title: "Test", amount: 200, timestamp: Date(), accountId: "richmanaccount")
-            modelContext.insert(transaction)
-        }
-    }
-
-    private func deleteItems(offsets: IndexSet) {
-        withAnimation {
-            for index in offsets {
-                modelContext.delete(transactions[index])
-            }
-        }
     }
 }
 
 #Preview {
-    TransactionListView()
+    TransactionListView(contentVM: ContentViewModel(),transactionVM: TransactionViewModel())
         .modelContainer(for: Transact.self, inMemory: true)
 }

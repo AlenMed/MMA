@@ -25,14 +25,16 @@ struct MMAApp: App {
     }()
     
     @State var contentVM = ContentViewModel()
+    @State var transactionVM = TransactionViewModel()
+    @State var categoryVM = CategoryViewModel()
 
     var body: some Scene {
         WindowGroup {
             #if os(iOS)
-            iOSContentView(contentVM: contentVM)
+            iOSContentView(contentVM: contentVM, transactionVM: transactionVM, categoryVM: categoryVM)
             #endif
             #if os(macOS)
-            MacOSContentView(contentVM: contentVM)
+            MacOSContentView(contentVM: contentVM, transactionVM: transactionVM, categoryVM: categoryVM)
             #endif
         }
         .modelContainer(sharedModelContainer)

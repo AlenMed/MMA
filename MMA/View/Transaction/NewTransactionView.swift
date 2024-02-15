@@ -73,7 +73,7 @@ struct NewTransactionView: View {
         
     }
     private func addTransaction() {
-        let transaction = Transact(title: title, note: note, amount: amount ?? 0, timestamp: Date(), accountId: "To be added")
+        let transaction = Transact(title: title, note: note, amount: amount ?? 0, timestamp: Date(), category: category, accountId: "No Account ID ")
         withAnimation {
             modelContext.insert(transaction)
         }

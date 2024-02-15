@@ -10,6 +10,8 @@ import SwiftUI
 #if os(macOS)
 struct MacOSContentView: View {
     @Bindable var contentVM: ContentViewModel
+    @State var transactionVM: TransactionViewModel
+    @State var categoryVM: CategoryViewModel
     
     var body: some View {
         NavigationSplitView(sidebar: {
@@ -20,8 +22,14 @@ struct MacOSContentView: View {
         .sheet(isPresented: $contentVM.showNewCategorySheet) {
             NewCategoryView()
         }
+        .sheet(isPresented: $contentVM.showCategoryDetailSheet) {
+            CategoryDetailView(categoryVM: categoryVM)
+        }
         .sheet(isPresented: $contentVM.showNewTransactionSheet) {
             NewTransactionView()
+        }
+        .sheet(isPresented: $contentVM.showTransactionDetailSheet) {
+            TransactionDetailView(transactionVM: transactionVM)
         }
         .toolbar {
             ToolbarItem {
@@ -56,7 +64,7 @@ struct MacOSContentView: View {
         case 2:
             ChartView()
         case 3:
-            TransactionListView()
+            TransactionListView(contentVM: contentVM, transactionVM: transactionVM)
         case 4:
             CategoryListView()
         default:
@@ -66,6 +74,6 @@ struct MacOSContentView: View {
 }
 
 #Preview {
-    MacOSContentView(contentVM: ContentViewModel())
+    MacOSContentView(contentVM: ContentViewModel(), transactionVM: TransactionViewModel(), categoryVM: CategoryViewModel())
 }
 #endif
