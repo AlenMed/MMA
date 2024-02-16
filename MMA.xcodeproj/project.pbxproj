@@ -23,6 +23,8 @@
 		445F61FC2B7D96EA0010E2BD /* CategoryDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F61FB2B7D96EA0010E2BD /* CategoryDetailView.swift */; };
 		445F61FE2B7D96F60010E2BD /* TransactionDetailView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F61FD2B7D96F60010E2BD /* TransactionDetailView.swift */; };
 		445F62002B7E4E4E0010E2BD /* Toolbar.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F61FF2B7E4E4E0010E2BD /* Toolbar.swift */; };
+		445F62022B7F9CE90010E2BD /* TransactionCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F62012B7F9CE90010E2BD /* TransactionCell.swift */; };
+		445F62042B7FA6A70010E2BD /* CategoryCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 445F62032B7FA6A70010E2BD /* CategoryCell.swift */; };
 		449E54CF2B7D3BA0009018CF /* HomeView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449E54CE2B7D3BA0009018CF /* HomeView.swift */; };
 		449E54D12B7D3BA7009018CF /* ChartView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449E54D02B7D3BA7009018CF /* ChartView.swift */; };
 		449E54D42B7D3C0B009018CF /* CategoryListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 449E54D32B7D3C0B009018CF /* CategoryListView.swift */; };
@@ -49,6 +51,8 @@
 		445F61FB2B7D96EA0010E2BD /* CategoryDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryDetailView.swift; sourceTree = "<group>"; };
 		445F61FD2B7D96F60010E2BD /* TransactionDetailView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionDetailView.swift; sourceTree = "<group>"; };
 		445F61FF2B7E4E4E0010E2BD /* Toolbar.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Toolbar.swift; sourceTree = "<group>"; };
+		445F62012B7F9CE90010E2BD /* TransactionCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TransactionCell.swift; sourceTree = "<group>"; };
+		445F62032B7FA6A70010E2BD /* CategoryCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryCell.swift; sourceTree = "<group>"; };
 		449E54CE2B7D3BA0009018CF /* HomeView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeView.swift; sourceTree = "<group>"; };
 		449E54D02B7D3BA7009018CF /* ChartView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChartView.swift; sourceTree = "<group>"; };
 		449E54D32B7D3C0B009018CF /* CategoryListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CategoryListView.swift; sourceTree = "<group>"; };
@@ -141,8 +145,9 @@
 			isa = PBXGroup;
 			children = (
 				44433DF22B7D2B68003D5F90 /* TransactionListView.swift */,
-				44D7DE3D2B7D47AF0079D8F5 /* NewTransactionView.swift */,
 				445F61FD2B7D96F60010E2BD /* TransactionDetailView.swift */,
+				44D7DE3D2B7D47AF0079D8F5 /* NewTransactionView.swift */,
+				445F62012B7F9CE90010E2BD /* TransactionCell.swift */,
 			);
 			path = Transaction;
 			sourceTree = "<group>";
@@ -180,6 +185,7 @@
 				449E54D32B7D3C0B009018CF /* CategoryListView.swift */,
 				44D7DE3B2B7D47A70079D8F5 /* NewCategoryView.swift */,
 				445F61FB2B7D96EA0010E2BD /* CategoryDetailView.swift */,
+				445F62032B7FA6A70010E2BD /* CategoryCell.swift */,
 			);
 			path = Category;
 			sourceTree = "<group>";
@@ -277,12 +283,14 @@
 				44433E072B7D2E18003D5F90 /* MacOSContentView.swift in Sources */,
 				44D7DE3E2B7D47AF0079D8F5 /* NewTransactionView.swift in Sources */,
 				44433DF52B7D2B68003D5F90 /* Transact.swift in Sources */,
+				445F62022B7F9CE90010E2BD /* TransactionCell.swift in Sources */,
 				445F61FE2B7D96F60010E2BD /* TransactionDetailView.swift in Sources */,
 				445F61FA2B7D95AE0010E2BD /* CategoryButtonStyle.swift in Sources */,
 				445F61F82B7D937D0010E2BD /* CategoryViewModel.swift in Sources */,
 				44433DF12B7D2B68003D5F90 /* MMAApp.swift in Sources */,
 				44D7DE3C2B7D47A70079D8F5 /* NewCategoryView.swift in Sources */,
 				445F61F62B7D93720010E2BD /* TransactionViewModel.swift in Sources */,
+				445F62042B7FA6A70010E2BD /* CategoryCell.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

@@ -14,50 +14,11 @@ struct CategoryListView: View {
     @Bindable var contentVM: ContentViewModel
     @Bindable var categoryVM: CategoryViewModel
     
-    @State private var selection: [Category] = []
 
     var body: some View {
         List {
             ForEach(categories) { category in
-                HStack(alignment: .top) {
-                    
-                    if categoryVM.multipleSelection {
-                        Button {
-                            handleSelection(multiSelect: categoryVM.multipleSelection, category: category)
-                        } label: {
-                            if selection.contains(category) {
-                                Image(systemName: "checkmark.circle.fill")
-                            } else {
-                                Image(systemName: "circle")
-                            }
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                    }
-                    
-                    Text("\(category.name)")
-                        
-                    Spacer()
-                    
-                    Text(DateFormatter.localizedString(from: category.timestamp, dateStyle: .medium, timeStyle: .short))
-                    
-                    if selection.contains(category) {
-                        Button {
-                            withAnimation {
-                                categoryVM.selectedCategory = category
-                                contentVM.showCategoryDetailSheet = true
-                            }
-                        } label: {
-                            Image(systemName: "info.circle")
-                        }
-                        .buttonStyle(PlainButtonStyle())
-                    }
-                }
-                .padding(6)
-                .background(selection.contains(category) ? Color.accentColor.opacity(0.33) : Color.clear)
-                .clipShape(RoundedRectangle(cornerRadius: 6))
-                .onTapGesture {
-                    handleSelection(multiSelect: categoryVM.multipleSelection, category: category)
-                }
+                CategoryCell(contentVM: contentVM, categoryVM: categoryVM, category: category)
             }
         }
         .navigationTitle("Categories")
@@ -70,29 +31,6 @@ struct CategoryListView: View {
             withAnimation {
                 categoryVM.multipleSelection = false
             }
-        }
-    }
-    
-    private func handleSelection(multiSelect: Bool, category: Category) {
-        withAnimation {
-            
-            if multiSelect {
-                if selection.contains(category) {
-                    selection.removeAll(where: { $0.id == category.id })
-                } else {
-                    selection.append(category)
-                }
-                
-                
-            } else {
-                if !selection.contains(category) {
-                    selection = []
-                    selection.append(category)
-                } else {
-                    selection = []
-                }
-            }
-            categoryVM.selectedCategories = selection
         }
     }
 }
