@@ -22,7 +22,7 @@ struct TransactionCell: View {
             
             if transactionVM.multipleSelection {
                 Button {
-                    handleSelection(multiSelect: transactionVM.multipleSelection, transaction: transaction)
+                    transactionVM.handleCellSelection(multiSelect: transactionVM.multipleSelection, transaction: transaction)
                 } label: {
                     if transactionVM.selectedTransactions.contains(transaction) {
                         Image(systemName: "checkmark.circle.fill")
@@ -73,45 +73,17 @@ struct TransactionCell: View {
             }
         }
         .onTapGesture {
-            handleSelection(multiSelect: transactionVM.multipleSelection, transaction: transaction)
+            transactionVM.handleCellSelection(multiSelect: transactionVM.multipleSelection, transaction: transaction)
+        }
+        .onLongPressGesture(minimumDuration: 0.2) {
+            withAnimation {
+                transactionVM.selectedTransaction = transaction
+                contentVM.showTransactionDetailSheet = true
+            }
         }
         .padding(6)
         .background(transactionVM.selectedTransactions.contains(transaction) ? Color.accentColor.opacity(0.33) : Color.clear)
         .clipShape(RoundedRectangle(cornerRadius: 6))
-    }
-    
-    
-//MARK: Move to VM?
-    private func handleSelection(multiSelect: Bool, transaction: Transact) {
-        withAnimation {
-            if transactionVM.selectedTransactions.contains(transaction) {
-                #if os(iOS)
-                contentVM.showTransactionDetailSheet = true
-                #endif
-                #if os(macOS)
-                transactionVM.selectedTransaction = nil
-                #endif
-            } else {
-                transactionVM.selectedTransaction = transaction
-            }
-            
-            if multiSelect {
-                if transactionVM.selectedTransactions.contains(transaction) {
-                    transactionVM.selectedTransactions.removeAll(where: { $0.id == transaction.id })
-                } else {
-                    transactionVM.selectedTransactions.append(transaction)
-                }
-                
-                
-            } else {
-                if !transactionVM.selectedTransactions.contains(transaction) {
-                    transactionVM.selectedTransactions = []
-                    transactionVM.selectedTransactions.append(transaction)
-                } else {
-                    transactionVM.selectedTransactions = []
-                }
-            }
-        }
     }
 }
 

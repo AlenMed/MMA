@@ -9,14 +9,9 @@ import SwiftUI
 import SwiftData
 
 struct CategoryDetailView: View {
-    @Environment(\.modelContext) private var modelContext
     @Environment(\.dismiss) var dismiss
-    @Query private var categories: [Category]
     
     @Bindable var categoryVM: CategoryViewModel
-    var selectedCategory: Category? {
-            categories.first { $0.id == categoryVM.selectedCategory?.id }
-        }
     
     
     var body: some View {
@@ -36,7 +31,7 @@ struct CategoryDetailView: View {
             }
             
             
-            if let category = selectedCategory {
+            if let category = categoryVM.selectedCategory {
                 VStack {
                     Text("\(category.name)")
                         .font(.title3)

@@ -27,4 +27,31 @@ class CategoryViewModel {
             selectedCategories = []
         }
     }
+    
+    func handleCellSelection(multiSelect: Bool, category: Category) {
+        withAnimation {
+            if selectedCategories.contains(category) {
+                selectedCategory = nil
+            } else {
+                selectedCategory = category
+            }
+            
+            if multiSelect {
+                if selectedCategories.contains(category) {
+                    selectedCategories.removeAll(where: { $0.id == category.id })
+                } else {
+                    selectedCategories.append(category)
+                }
+                
+                
+            } else {
+                if !selectedCategories.contains(category) {
+                    selectedCategories = []
+                    selectedCategories.append(category)
+                } else {
+                    selectedCategories = []
+                }
+            }
+        }
+    }
 }

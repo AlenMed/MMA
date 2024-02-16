@@ -27,4 +27,32 @@ class TransactionViewModel {
             selectedTransactions = []
         }
     }
+    
+    func handleCellSelection(multiSelect: Bool, transaction: Transact) {
+        withAnimation {
+            
+            if selectedTransactions.contains(transaction) {
+                selectedTransaction = nil
+            } else {
+                selectedTransaction = transaction
+            }
+            
+            if multiSelect {
+                if selectedTransactions.contains(transaction) {
+                    selectedTransactions.removeAll(where: { $0.id == transaction.id })
+                } else {
+                    selectedTransactions.append(transaction)
+                }
+                
+                
+            } else {
+                if !selectedTransactions.contains(transaction) {
+                    selectedTransactions = []
+                    selectedTransactions.append(transaction)
+                } else {
+                    selectedTransactions = []
+                }
+            }
+        }
+    }
 }

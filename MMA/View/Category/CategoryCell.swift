@@ -19,7 +19,7 @@ struct CategoryCell: View {
             
             if categoryVM.multipleSelection {
                 Button {
-                    handleSelection(multiSelect: categoryVM.multipleSelection, category: category)
+                    categoryVM.handleCellSelection(multiSelect: categoryVM.multipleSelection, category: category)
                 } label: {
                     if categoryVM.selectedCategories.contains(category) {
                         Image(systemName: "checkmark.circle.fill")
@@ -52,38 +52,12 @@ struct CategoryCell: View {
         .background(categoryVM.selectedCategories.contains(category) ? Color.accentColor.opacity(0.33) : Color.clear)
         .clipShape(RoundedRectangle(cornerRadius: 6))
         .onTapGesture {
-            handleSelection(multiSelect: categoryVM.multipleSelection, category: category)
+            categoryVM.handleCellSelection(multiSelect: categoryVM.multipleSelection, category: category)
         }
-    }
-    
-    private func handleSelection(multiSelect: Bool, category: Category) {
-        withAnimation {
-            if categoryVM.selectedCategories.contains(category) {
-                #if os(iOS)
-                contentVM.showCategoryDetailSheet = true
-                #endif
-                #if os(macOS)
-                categoryVM.selectedCategory = nil
-                #endif
-            } else {
+        .onLongPressGesture(minimumDuration: 0.2) {
+            withAnimation {
                 categoryVM.selectedCategory = category
-            }
-            
-            if multiSelect {
-                if categoryVM.selectedCategories.contains(category) {
-                    categoryVM.selectedCategories.removeAll(where: { $0.id == category.id })
-                } else {
-                    categoryVM.selectedCategories.append(category)
-                }
-                
-                
-            } else {
-                if !categoryVM.selectedCategories.contains(category) {
-                    categoryVM.selectedCategories = []
-                    categoryVM.selectedCategories.append(category)
-                } else {
-                    categoryVM.selectedCategories = []
-                }
+                contentVM.showCategoryDetailSheet = true
             }
         }
     }
