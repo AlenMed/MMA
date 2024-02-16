@@ -20,7 +20,7 @@ struct MacOSContentView: View {
             MacOSSidebar(contentVM: contentVM)
         }) {
             viewForAppState()
-        }
+        } 
         .sheet(isPresented: $contentVM.showNewCategorySheet) {
             NewCategoryView()
         }

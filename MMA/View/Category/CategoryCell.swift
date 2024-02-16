@@ -54,7 +54,7 @@ struct CategoryCell: View {
         .onTapGesture {
             categoryVM.handleCellSelection(multiSelect: categoryVM.multipleSelection, category: category)
         }
-        .onLongPressGesture(minimumDuration: 0.2) {
+        .onLongPressGesture(minimumDuration: 0.15) {
             withAnimation {
                 categoryVM.selectedCategory = category
                 contentVM.showCategoryDetailSheet = true

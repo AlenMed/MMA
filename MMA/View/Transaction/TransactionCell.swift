@@ -75,7 +75,7 @@ struct TransactionCell: View {
         .onTapGesture {
             transactionVM.handleCellSelection(multiSelect: transactionVM.multipleSelection, transaction: transaction)
         }
-        .onLongPressGesture(minimumDuration: 0.2) {
+        .onLongPressGesture(minimumDuration: 0.15) {
             withAnimation {
                 transactionVM.selectedTransaction = transaction
                 contentVM.showTransactionDetailSheet = true
