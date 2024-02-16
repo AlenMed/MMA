@@ -47,13 +47,21 @@ struct iOSContentView: View {
             .sheet(isPresented: $contentVM.showNewTransactionSheet) {
                 NewTransactionView()
             }
-            .sheet(isPresented: $contentVM.showTransactionDetailSheet) {
+            .sheet(isPresented: $contentVM.showTransactionDetailSheet, onDismiss: {
+                withAnimation {
+                    transactionVM.selectedTransaction = nil
+                }
+            }) {
                 TransactionDetailView(transactionVM: transactionVM)
             }
             .sheet(isPresented: $contentVM.showNewCategorySheet) {
                 NewCategoryView()
             }
-            .sheet(isPresented: $contentVM.showCategoryDetailSheet) {
+            .sheet(isPresented: $contentVM.showCategoryDetailSheet, onDismiss: {
+                withAnimation {
+                    categoryVM.selectedCategory = nil
+                }
+            }) {
                 CategoryDetailView(categoryVM: categoryVM)
             }
             .onChange(of: tabSelection) {

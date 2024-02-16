@@ -51,7 +51,9 @@ struct CategoryDetailView: View {
                             }
                         }
                         .padding(12)
+                        #if os(macOS)
                         .listStyle(.inset(alternatesRowBackgrounds: true))
+                        #endif
                         }
                         
                     

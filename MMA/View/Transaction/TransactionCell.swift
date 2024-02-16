@@ -76,14 +76,25 @@ struct TransactionCell: View {
             handleSelection(multiSelect: transactionVM.multipleSelection, transaction: transaction)
         }
         .padding(6)
-        .background(transactionVM.selectedTransactions.contains(transaction) ? Color.accentColor.opacity(0.33) : transactionVM.selectedTransaction == transaction ? Color.accentColor.opacity(0.33) : Color.clear)
+        .background(transactionVM.selectedTransactions.contains(transaction) ? Color.accentColor.opacity(0.33) : Color.clear)
         .clipShape(RoundedRectangle(cornerRadius: 6))
     }
     
     
+//MARK: Move to VM?
     private func handleSelection(multiSelect: Bool, transaction: Transact) {
         withAnimation {
-
+            if transactionVM.selectedTransactions.contains(transaction) {
+                #if os(iOS)
+                contentVM.showTransactionDetailSheet = true
+                #endif
+                #if os(macOS)
+                transactionVM.selectedTransaction = nil
+                #endif
+            } else {
+                transactionVM.selectedTransaction = transaction
+            }
+            
             if multiSelect {
                 if transactionVM.selectedTransactions.contains(transaction) {
                     transactionVM.selectedTransactions.removeAll(where: { $0.id == transaction.id })

@@ -58,6 +58,16 @@ struct CategoryCell: View {
     
     private func handleSelection(multiSelect: Bool, category: Category) {
         withAnimation {
+            if categoryVM.selectedCategories.contains(category) {
+                #if os(iOS)
+                contentVM.showCategoryDetailSheet = true
+                #endif
+                #if os(macOS)
+                categoryVM.selectedCategory = nil
+                #endif
+            } else {
+                categoryVM.selectedCategory = category
+            }
             
             if multiSelect {
                 if categoryVM.selectedCategories.contains(category) {

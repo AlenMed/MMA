@@ -53,7 +53,7 @@ struct Toolbar: ToolbarContent {
             }
         }
     }
-//TODO: iOS version needs fix.
+
     private func deleteItem() {
         if let _ = transactionVM.selectedTransaction, let _ = categoryVM.selectedCategory {
                 print("Error: Two items selected.")
@@ -62,9 +62,11 @@ struct Toolbar: ToolbarContent {
         
         if let transaction = transactionVM.selectedTransaction {
             modelContext.delete(transaction)
+            transactionVM.selectedTransaction = nil
         }
         if let category = categoryVM.selectedCategory {
             modelContext.delete(category)
+            categoryVM.selectedCategory = nil
         }
     }
 }
