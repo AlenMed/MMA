@@ -35,7 +35,6 @@ struct MacOSContentView: View {
             TransactionDetailView(transactionVM: transactionVM)
                 .frame(minWidth: 320, maxWidth: 600, minHeight: 420, maxHeight: 420)
         }
-        
         .toolbar {
             Toolbar(contentVM: contentVM, transactionVM: transactionVM, categoryVM: categoryVM)
         }

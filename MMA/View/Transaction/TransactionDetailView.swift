@@ -27,6 +27,7 @@ struct TransactionDetailView: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 24) {
             HStack {
+                
                 Button {
                     withAnimation {
                         transactionVM.selectedTransaction = nil
@@ -38,9 +39,22 @@ struct TransactionDetailView: View {
                         .foregroundStyle(Color.accentColor)
                 }
                 .buttonStyle(PlainButtonStyle())
+                
                 Spacer()
+                
+                Button {
+                    withAnimation {
+                        dismiss()
+                        if let transaction = transactionVM.selectedTransaction {
+                            modelContext.delete(transaction)
+                            transactionVM.selectedTransaction = nil
+                        }
+                    }
+                } label: {
+                    Image(systemName: "trash.fill")
+                        .foregroundStyle(.red)
+                }
             }
-            
             
             
             VStack(alignment: .leading, spacing: 24) {
@@ -51,11 +65,11 @@ struct TransactionDetailView: View {
                 Menu {
                     ForEach(categories, id: \.id) { item in
                         Button(item.name) {
-                            category = item
+                                category = item
                         }
                     }
                 } label: {
-                    Text(transactionVM.selectedTransaction?.category?.name ?? "Change Category")
+                    Text(category?.name ?? "Choose Category")
                 }
                 
                 HStack {
@@ -79,18 +93,6 @@ struct TransactionDetailView: View {
                     Text("Transaction ID: \(id?.uuidString ?? "no ID")")
                         .font(.system(size: 6, weight: .ultraLight))
                 Spacer()
-                    Button {
-                        withAnimation {
-                            dismiss()
-                            if let transaction = transactionVM.selectedTransaction {
-                                modelContext.delete(transaction)
-                                transactionVM.selectedTransaction = nil
-                            }
-                        }
-                } label: {
-                    Image(systemName: "trash.fill")
-                        .foregroundStyle(.red)
-                }
                 }
             }
         }
