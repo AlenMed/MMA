@@ -12,15 +12,15 @@ struct iOSContentView: View {
     @Environment(\.modelContext) private var modelContext
     
     @Bindable var contentVM: ContentViewModel
-    @State var transactionVM: TransactionViewModel
-    @State var categoryVM: CategoryViewModel
+    @Bindable var transactionVM: TransactionViewModel
+    @Bindable var categoryVM: CategoryViewModel
     
     @State private var tabSelection: Int = 1
     
     var body: some View {
         NavigationStack {
             TabView(selection: $tabSelection) {
-                HomeView()
+                HomeView(contentVM: contentVM, transactionVM: transactionVM, categoryVM: categoryVM)
                     .tabItem {
                         Image(systemName: "house.fill")
                     }

@@ -36,46 +36,46 @@ class ContentViewModel {
         AppState(id: 4, name: "Categories", imageName: "square.filled.on.square")
     ]
     
-    let transactionMenuOptions: [Toolbar.ToolbarMenuOption] = [
-        Toolbar.ToolbarMenuOption(
+    let transactionMenuOptions: [ToolbarMenuOption] = [
+        ToolbarMenuOption(
                 id: 1,
                 name: "Change",
                 icon: "square.and.pencil",
                 subOptions: [
-                    Toolbar.ToolbarMenuOption.SubOption(name: "Category"),
-                    Toolbar.ToolbarMenuOption.SubOption(name: "Account")
+                    ToolbarMenuOption.SubOption(name: "Category"),
+                    ToolbarMenuOption.SubOption(name: "Account")
                             ]
                 ),
     
-        Toolbar.ToolbarMenuOption(
+        ToolbarMenuOption(
                 id: 2,
                 name: "Select",
                 icon: "checklist"),
     
-        Toolbar.ToolbarMenuOption(
+        ToolbarMenuOption(
                 id: 3,
                 name: "Delete",
                 icon: "trash.fill",
                 color: .red)
     ]
     
-    let categoryMenuOptions: [Toolbar.ToolbarMenuOption] = [
-        Toolbar.ToolbarMenuOption(
+    let categoryMenuOptions: [ToolbarMenuOption] = [
+        ToolbarMenuOption(
                 id: 1,
                 name: "Change",
                 icon: "square.and.pencil",
                 subOptions: [
-                    Toolbar.ToolbarMenuOption.SubOption(name: "TBA"),
-                    Toolbar.ToolbarMenuOption.SubOption(name: "TBA"),
+                    ToolbarMenuOption.SubOption(name: "TBA"),
+                    ToolbarMenuOption.SubOption(name: "TBA"),
                             ]
                 ),
         
-        Toolbar.ToolbarMenuOption(
+        ToolbarMenuOption(
                 id: 2,
                 name: "Select",
                 icon: "checklist"),
     
-        Toolbar.ToolbarMenuOption(
+        ToolbarMenuOption(
                 id: 3,
                 name: "Delete",
                 icon: "trash.fill",

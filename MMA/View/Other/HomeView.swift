@@ -6,16 +6,23 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct HomeView: View {
+    @State var contentVM: ContentViewModel
+    @State var transactionVM: TransactionViewModel
+    @State var categoryVM: CategoryViewModel
+    
     var body: some View {
-        VStack {
-            Text("Hello, this is the Home View.")
+        VStack(alignment: .leading) {
+            FinReportView(transactionVM: transactionVM)
+        Spacer()
         }
+        .padding(12)
         .navigationTitle("Home")
     }
 }
 
 #Preview {
-    HomeView()
+    HomeView(contentVM: ContentViewModel(), transactionVM: TransactionViewModel(), categoryVM: CategoryViewModel())
 }

@@ -11,7 +11,7 @@ import SwiftUI
 struct MacOSContentView: View {
     @Environment(\.modelContext) private var modelContext
     
-    @Bindable var contentVM: ContentViewModel
+    @State var contentVM: ContentViewModel
     @State var transactionVM: TransactionViewModel
     @State var categoryVM: CategoryViewModel
     
@@ -44,7 +44,7 @@ struct MacOSContentView: View {
     private func viewForAppState() -> some View {
         switch contentVM.appState {
         case 1:
-            HomeView()
+            HomeView(contentVM: contentVM, transactionVM: transactionVM, categoryVM: categoryVM)
         case 2:
             ChartView()
         case 3:

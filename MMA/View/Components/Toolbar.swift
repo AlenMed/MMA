@@ -7,6 +7,32 @@
 
 import SwiftUI
 
+struct ToolbarMenuOption {
+    var id: Int
+    var name: String
+    var icon: String
+    var color: Color?
+    var subOptions: [SubOption]?
+    
+    init(id: Int, name: String, icon: String, color: Color? = nil, subOptions: [SubOption]? = nil) {
+        self.id = id
+        self.name = name
+        self.icon = icon
+        self.color = color
+        self.subOptions = subOptions
+    }
+    
+    struct SubOption {
+        var id: UUID
+        var name: String
+        
+        init(id: UUID = UUID(), name: String) {
+            self.id = id
+            self.name = name
+        }
+    }
+}
+
 #if os(iOS)
 struct Toolbar: ToolbarContent {
     @Environment(\.modelContext) private var modelContext
@@ -14,7 +40,6 @@ struct Toolbar: ToolbarContent {
     @Bindable var contentVM: ContentViewModel
     @Bindable var transactionVM: TransactionViewModel
     @Bindable var categoryVM: CategoryViewModel
-    
     
     var body: some ToolbarContent {
         ToolbarItem {
@@ -89,32 +114,6 @@ struct Toolbar: ToolbarContent {
     @Bindable var transactionVM: TransactionViewModel
     @Bindable var categoryVM: CategoryViewModel
     
-    struct ToolbarMenuOption {
-        var id: Int
-        var name: String
-        var icon: String
-        var color: Color?
-        var subOptions: [SubOption]?
-        
-        init(id: Int, name: String, icon: String, color: Color? = nil, subOptions: [SubOption]? = nil) {
-            self.id = id
-            self.name = name
-            self.icon = icon
-            self.color = color
-            self.subOptions = subOptions
-        }
-        
-        struct SubOption {
-            var id: UUID
-            var name: String
-            
-            init(id: UUID = UUID(), name: String) {
-                self.id = id
-                self.name = name
-            }
-        }
-    }
-    
     func handleOption(option: ToolbarMenuOption) {
         if option.name == "Select" && contentVM.appState == 3 {
             transactionVM.toggleMultipleSelection()
@@ -158,9 +157,9 @@ struct Toolbar: ToolbarContent {
         ToolbarItem {
             switch contentVM.appState {
             case 1:
-                Text("Menu")
+                Text("")
             case 2:
-                Text("Yo")
+                Text("")
             case 3:
                 Menu {
                     ForEach(contentVM.transactionMenuOptions, id: \.id) { option in
