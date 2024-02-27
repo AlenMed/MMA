@@ -82,8 +82,6 @@ struct ChartView: View {
                         .padding(12)
                     }
                     .frame(maxWidth: 240)
-                    //MARK: END TOPLEADING CHART
-//MARK: TEMP SPACER, WILL BE PUSHED ONCE ITEMS ARE ADDED
                 Spacer()
                 }
                 .frame(minWidth: 0, maxWidth: .infinity, minHeight: 80, maxHeight: 360)
@@ -108,21 +106,6 @@ struct ChartView: View {
         }
         return nil
     }
-    
-//    private func getSelectedCategory(_ value: Int) -> String? {
-//        var cumulativeTotal: Int = 0
-//        for category in categories {
-//            if let transactions = category.transactions {
-//                let total = transactions.reduce(0) { $0 + ($1.amount) }
-//                cumulativeTotal += Int(total)
-//                if value < cumulativeTotal {
-//                    return category.name
-//                }
-//            }
-//        }
-//        return nil
-//    }
-
 }
 
 #Preview {
