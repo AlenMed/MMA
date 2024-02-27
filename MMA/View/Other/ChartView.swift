@@ -13,8 +13,7 @@ import Charts
 struct ChartView: View {
     @Query private var categories: [Category]
     @State private var chartSelection: Int?
-    @State private var selectedCategoryName: String?
-    
+    @State private var selectedCategory: Category?
     
     enum ValueFilter {
         case positive
@@ -22,18 +21,18 @@ struct ChartView: View {
         case all
     }
         
-    var categoryTotal: [(String, Double?)] {
+    var categoriesSum: [(String, Double?)] {
         return categories.map { ($0.name, $0.transactions?.reduce(0.0) { $0 + $1.amount }) }
     }
         
     func filterValues(_ filter: ValueFilter) -> [(String, Double?)] {
         switch filter {
         case .positive:
-            return categoryTotal.filter { $0.1 ?? 0 > 0 }
+            return categoriesSum.filter { $0.1 ?? 0 > 0 }
         case .negative:
-            return categoryTotal.filter { $0.1 ?? 0 < 0 }
+            return categoriesSum.filter { $0.1 ?? 0 < 0 }
         case .all:
-            return categoryTotal
+            return categoriesSum
         }
     }
     
@@ -46,27 +45,43 @@ struct ChartView: View {
                             ForEach(filterValues(.positive), id: \.0) { categoryName, amount in
                                 SectorMark(angle: .value("Income", amount ?? 0),
                                            innerRadius: .ratio(0.5),
-                                           outerRadius: selectedCategoryName == categoryName ? 120 : 250,
                                            angularInset: 1.5)
                                 .foregroundStyle(by: .value("Category", categoryName))
                                 .cornerRadius(4)
                             }
                         }
-                        .padding(12)
-                        .frame(minWidth: 120, maxWidth: 320, minHeight: 80, maxHeight: 180)
+                        .padding(8)
+                        .frame(minWidth: 120, maxWidth: 360, minHeight: 80, maxHeight: 220)
                         .chartLegend(position: .bottom, alignment: .center)
                         .chartAngleSelection(value: $chartSelection)
                         .onChange(of: chartSelection) {
                             if let chartSelection {
-                                withAnimation {
-                                    if let selectedCategory = getSelectedCategory(chartSelection) {
-                                        selectedCategoryName = selectedCategory
-                                    }
+                                if let selCategory = setSelectedCategory(chartSelection) {
+                                    selectedCategory = selCategory
                                 }
                             }
                         }
-                    Spacer()
+                        
+                        VStack(alignment: .leading) {
+                            HStack {
+                                if let selectedCategory {
+                                    Text("\(selectedCategory.name):")
+                                        let categoryTotal = selectedCategory.transactions?.reduce(0.0) { $0 + ($1.amount ) } ?? 0.0
+                                        Text(categoryTotal.formattedAsCurrency())
+                                Spacer()
+                                }
+                            }
+                            
+                            HStack {
+                                Text("Total Income:")
+                                let totalAmount = categoriesSum.reduce(0.0) { $0 + ($1.1 ?? 0.0) }
+                                    Text(totalAmount.formattedAsCurrency())
+                                Spacer()
+                            }
+                        }
+                        .padding(12)
                     }
+                    .frame(maxWidth: 240)
                     //MARK: END TOPLEADING CHART
 //MARK: TEMP SPACER, WILL BE PUSHED ONCE ITEMS ARE ADDED
                 Spacer()
@@ -80,19 +95,34 @@ struct ChartView: View {
         .navigationTitle("Charts")
     }
     
-    private func getSelectedCategory(_ value: Int) -> String? {
+    private func setSelectedCategory(_ value: Int) -> Category? {
         var cumulativeTotal: Int = 0
         for category in categories {
             if let transactions = category.transactions {
                 let total = transactions.reduce(0) { $0 + ($1.amount) }
                 cumulativeTotal += Int(total)
                 if value < cumulativeTotal {
-                    return category.name
+                        return category
                 }
             }
         }
         return nil
     }
+    
+//    private func getSelectedCategory(_ value: Int) -> String? {
+//        var cumulativeTotal: Int = 0
+//        for category in categories {
+//            if let transactions = category.transactions {
+//                let total = transactions.reduce(0) { $0 + ($1.amount) }
+//                cumulativeTotal += Int(total)
+//                if value < cumulativeTotal {
+//                    return category.name
+//                }
+//            }
+//        }
+//        return nil
+//    }
+
 }
 
 #Preview {
